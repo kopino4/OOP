@@ -11,9 +11,8 @@ class CustomerTest extends FunSuite with Matchers {
   ServiceLocator.movieService = movieService
 
   test("Customer 1 statement") {
-    Globals.UseEmphasis = true
-
-    customers(0).statement() shouldBe
+    val statement = customers(0).statement(false)
+    Formatter.getXml(statement,true) shouldBe
       """Streaming report for *Alice Wonderland* (1)
         |- The Nightmare Before Christmas (4K) 2.0 CZK
         |
@@ -26,10 +25,8 @@ class CustomerTest extends FunSuite with Matchers {
 
   // TODO fix the test ========= DONE
   test("Customer 2 statement") {
-    Globals.UseEmphasis = false
-    Globals.LoyaltyPointsBonus = true
-
-    customers(1).statement() shouldBe
+    val statement = customers(1).statement(true)
+    Formatter.getXml(statement, false) shouldBe
       """Streaming report for John Doe (2)
         |- Irishman 3.0 CZK
         |- Irishman (HD) 4.5 CZK
