@@ -46,13 +46,10 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
   // each streamed movie has contains the movie itself, streaming quality and price.
   // The statement class can be then an input into into a formatter which turns it into a String.
   def statement(): String = {
-    var total: Double = 0.0
-    var loyaltyPoints: Int = 0
+
+    var statement = new Statement
 
     for (streaming <- streamings) {
-      var price: Double = 0
-      var qualitySurcharge: Double = 1.0
-      var qualityText: String = null
       val movie = movieService.movieById(streaming.movieId)
 
       if (movie != null) {
@@ -61,68 +58,68 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
         movie.category match {
           case 1 =>
             // regular movies
-            price = 2
-            qualitySurcharge = 1.0
+            statement.price = 2
+            statement.qualitySurcharge = 1.0
             if (streaming.quality == 1) {
               // normal quality -- no surcharge
             } else if (streaming.quality == 2) {
               // HD quality
-              qualitySurcharge = 1.25
-              qualityText = "HD"
+              statement.qualitySurcharge = 1.25
+              statement.qualityText = "HD"
             } else if (streaming.quality == 3) {
               // 4K
-              qualitySurcharge = 1.5
-              qualityText = "4K"
+              statement.qualitySurcharge = 1.5
+              statement.qualityText = "4K"
             } else {
               println("Unknown streaming quality")
               sys.exit(1)
             }
           case 2 =>
             // new releases
-            price = 3
+            statement.price = 3
             if (streaming.quality == 1) {
               // normal quality -- no surcharge
             } else if (streaming.quality == 2) {
               // HD quality
-              qualitySurcharge = 1.5
-              qualityText = "HD"
+              statement.qualitySurcharge = 1.5
+              statement.qualityText = "HD"
             } else if (streaming.quality == 3) {
               // 4K
-              qualitySurcharge = 1.75
-              qualityText = "4K"
+              statement.qualitySurcharge = 1.75
+              statement.qualityText = "4K"
             }
           case 3 =>
             // for kids -- no quality surcharge
-            price = 2
+            statement.price = 2
             if (streaming.quality == 2) {
               // HD quality
-              qualityText = "HD"
+              statement.qualityText = "HD"
             } else if (streaming.quality == 3) {
               // 4K
-              qualityText = "4K"
+              statement.qualityText = "4K"
             }
         }
 
         // one point per streaming
-        loyaltyPoints += 1
+        statement.loyaltyPoints += 1
 
         // extra point for better streaming quality
         if (streaming.quality >= 2) {
-          loyaltyPoints += 1
+          statement.loyaltyPoints += 1
         }
 
-        total += price * qualitySurcharge
+        statement.total += statement.price * statement.qualitySurcharge
       }
     }
 
     // extra points for each streaming over 2
     if (streamings.size >= 2) {
-      loyaltyPoints += streamings.size - 2
+      statement.loyaltyPoints += streamings.size - 2
     }
 
     // if the bonus is on, double the points
     if (Globals.LoyaltyPointsBonus) {
-      loyaltyPoints *= 2
+      statement.loyaltyPoints *= 2
     }
 
     var uniqueMovies = 0
@@ -134,5 +131,6 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
       }
     }
 
+    Formatter.getXml(statement)
   }
 }

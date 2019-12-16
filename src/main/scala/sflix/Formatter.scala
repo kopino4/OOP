@@ -1,6 +1,6 @@
 package sflix
 
-class Formatter {
+object Formatter {
 
   var report:String = ""
 
@@ -12,11 +12,11 @@ class Formatter {
     }
 
     report += "- " + movie.title
-    if (qualityText != null) {
-      report += " (" + qualityText + ")"
+    if (statement.qualityText != null) {
+      report += " (" + statement.qualityText + ")"
     }
     report += " "
-    report += price * qualitySurcharge + " CZK"
+    report +=("%f CZK").format(statement.price * statement.qualitySurcharge)
     report += "\n"
 
 
@@ -27,13 +27,13 @@ class Formatter {
     report += "\n"
 
     if (Globals.UseEmphasis) {
-      report += ("Total: *" + total + "* CZK")
+      report += ("Total: *%f* CZK".format(statement.total))
     } else {
-      report += ("Total: " + total + " CZK")
+      report += ("Total: %f CZK".format(statement.total))
     }
 
     report += "\n"
-    report += ("Points: " + loyaltyPoints)
+    report += "Points: %d".format(statement.loyaltyPoints)
     report += "\n"
     report
   }
