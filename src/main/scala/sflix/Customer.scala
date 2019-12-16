@@ -46,6 +46,10 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
   // each streamed movie has contains the movie itself, streaming quality and price.
   // The statement class can be then an input into into a formatter which turns it into a String.
   def statement(): String = {
+    Formatter.getXml(calc_statement(), false)
+  }
+
+  def calc_statement(): Statement = {
 
     var statement = new Statement
     statement.name = this.name
@@ -134,7 +138,6 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
         seenMovies.add(streaming.movieId)
       }
     }
-
-    Formatter.getXml(statement, false)
+    statement
   }
 }
