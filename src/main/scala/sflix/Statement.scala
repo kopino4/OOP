@@ -4,7 +4,7 @@ class Statement {
   var uniqueMovies: Int = 0
   var movie_title: String = ""
 
-  var streamings = Nil
+  var streamings = new Streaming(0,0)
 
   var name: String = ""
   var id: Int = 0
