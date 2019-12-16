@@ -41,5 +41,10 @@ class CustomerTest extends FunSuite with Matchers {
 
   // TODO create a test that asserts correct price computation [1pt]
   // TODO create a test that asserts correct loyalty points computation [1pt]
+  test("loyaltyPointTest"){
+    val points = customers(0).calc_loyaltyPoints(2, true)
+
+    assert(points == 9) //!!!!!! NEVIM KOLIK TO MA VYJIT NEMEL JSEM CAS TO ZJISTIT
+  }
   // TODO create a test that asserts an HTML report [3pt]
 }
