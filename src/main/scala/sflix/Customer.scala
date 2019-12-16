@@ -120,15 +120,6 @@ def statement(LoyaltyPointsBonus: Boolean): Statement = {
       }
     }
 
-    // extra points for each streaming over 2
-    if (streamings.size >= 2) {
-      statement.loyaltyPoints += streamings.size - 2
-    }
-
-    // if the bonus is on, double the points
-    if (LoyaltyPointsBonus) {
-      statement.loyaltyPoints *= 2
-    }
 
     var seenMovies = scala.collection.mutable.Set[Int]()
     for (streaming <- streamings) {
@@ -137,6 +128,23 @@ def statement(LoyaltyPointsBonus: Boolean): Statement = {
         seenMovies.add(streaming.movieId)
       }
     }
+
+
+    statement.loyaltyPoints = calc_loyaltyPoints(streamings.size, LoyaltyPointsBonus)
     statement
   }
+
+def calc_loyaltyPoints(streamsize: Int, bonus: Boolean): Int = {
+    var points = 0
+    // extra points for each streaming over 2
+    if (streamings.size >= 2) {
+      points += streamsize- 2
+    }
+
+    // if the bonus is on, double the points
+    if (bonus) {
+      points *= 2
+    }
+    points
+}
 }
