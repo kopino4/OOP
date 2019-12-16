@@ -50,7 +50,7 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
   // If it is active, we double all the points
 def statement(LoyaltyPointsBonus: Boolean): Statement = {
 
-  var statement = new Statement
+    var statement = new Statement
     statement.name = this.name
     statement.id = this.id
     statement.streamings = this.streamings
