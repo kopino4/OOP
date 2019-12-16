@@ -125,7 +125,7 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
         report += " "
         report += price * qualitySurcharge + " CZK"
         report += "\n"
-        total = price * qualitySurcharge
+        total += price * qualitySurcharge
       }
     }
 

@@ -2,18 +2,16 @@ package sflix
 
 import org.scalatest.{FunSuite, Matchers}
 
-// TODO refactor tests so there is no code duplicate [1pt]
 // TODO save the expected outputs into files [1pt]
 class CustomerTest extends FunSuite with Matchers {
 
+  // TODO refactor tests so there is no code duplicate [1pt] ======= DONE
+  val movieService = new MovieService(getClass.getResource("/movies.xml").getFile)
+  val customers = Customer.load(getClass.getResource("/customers.xml").getFile)
+  ServiceLocator.movieService = movieService
+
   test("Customer 1 statement") {
     Globals.UseEmphasis = true
-    val movieService =
-      new MovieService(getClass.getResource("/movies.xml").getFile)
-    ServiceLocator.movieService = movieService
-
-    val customers =
-      Customer.load(getClass.getResource("/customers.xml").getFile)
 
     customers(0).statement() shouldBe
       """Streaming report for *Alice Wonderland* (1)
@@ -26,16 +24,10 @@ class CustomerTest extends FunSuite with Matchers {
         |""".stripMargin
   }
 
-  // TODO fix the test [1pt]
+  // TODO fix the test ========= DONE
   test("Customer 2 statement") {
     Globals.UseEmphasis = false
     Globals.LoyaltyPointsBonus = true
-    val movieService =
-      new MovieService(getClass.getResource("/movies.xml").getFile)
-    ServiceLocator.movieService = movieService
-
-    val customers =
-      Customer.load(getClass.getResource("/customers.xml").getFile)
 
     customers(1).statement() shouldBe
       """Streaming report for John Doe (2)
