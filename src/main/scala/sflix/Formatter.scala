@@ -4,8 +4,9 @@ object Formatter {
 
   var report:String = ""
 
-  def getXml(statement: Statement): String = {
-    if (Globals.UseEmphasis) {
+  // UseEmphasis - shall the name and the total price be emphasized?
+  def getXml(statement: Statement, UseEmphasis: Boolean): String = {
+    if (UseEmphasis) {
       report = "Streaming report for *%s* (%d)\n".format(statement.name, statement.id)
     } else {
       report = "Streaming report for %s (%d)\n".format(statement.name, statement.id)
@@ -26,7 +27,7 @@ object Formatter {
     report += ("Movies: %i").format(statement.uniqueMovies)
     report += "\n"
 
-    if (Globals.UseEmphasis) {
+    if (UseEmphasis) {
       report += ("Total: *%f* CZK".format(statement.total))
     } else {
       report += ("Total: %f CZK".format(statement.total))

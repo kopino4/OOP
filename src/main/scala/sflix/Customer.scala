@@ -37,7 +37,7 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
   // TODO remove global state [1pt]
   val movieService = ServiceLocator.movieService
 
-  // TODO this method does too much, refactor the statement computation and formatting [4pt]
+  // TODO this method does too much, refactor the statement computation and formatting [4pt] ========= DONE
   // Hint: This method does two things - computes a statement and formats into a string.
   // This is problematic since we cannot reuse it for any other report format.
   // A way to think about it is that instead of returning a String, you can return some intermediate representation
@@ -46,6 +46,13 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
   // each streamed movie has contains the movie itself, streaming quality and price.
   // The statement class can be then an input into into a formatter which turns it into a String.
   def statement(): String = {
+    val statement = calc_statement(false)
+    Formatter.getXml(statement, false)
+  }
+
+  // Is the loyalty points bonus active?
+  // If it is active, we double all the points
+  def calc_statement(LoyaltyPointsBonus: Boolean): Statement = {
 
     var statement = new Statement
     statement.name = this.name
@@ -123,7 +130,7 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
     }
 
     // if the bonus is on, double the points
-    if (Globals.LoyaltyPointsBonus) {
+    if (LoyaltyPointsBonus) {
       statement.loyaltyPoints *= 2
     }
 
@@ -134,7 +141,6 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
         seenMovies.add(streaming.movieId)
       }
     }
-
-    Formatter.getXml(statement)
+    statement
   }
 }
