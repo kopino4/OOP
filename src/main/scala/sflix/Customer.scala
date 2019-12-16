@@ -37,7 +37,7 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
   // TODO remove global state [1pt]
   val movieService = ServiceLocator.movieService
 
-  // TODO this method does too much, refactor the statement computation and formatting [4pt]
+  // TODO this method does too much, refactor the statement computation and formatting [4pt] ========= DONE
   // Hint: This method does two things - computes a statement and formats into a string.
   // This is problematic since we cannot reuse it for any other report format.
   // A way to think about it is that instead of returning a String, you can return some intermediate representation
@@ -135,6 +135,6 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
       }
     }
 
-    Formatter.getXml(statement)
+    Formatter.getXml(statement, false)
   }
 }
