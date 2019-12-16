@@ -48,13 +48,6 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
   def statement(): String = {
     var total: Double = 0.0
     var loyaltyPoints: Int = 0
-    var report: String = null
-
-    if (Globals.UseEmphasis) {
-      report = "Streaming report for *" + name + "* (" + id + ")\n"
-    } else {
-      report = "Streaming report for " + name + " (" + id + ")\n"
-    }
 
     for (streaming <- streamings) {
       var price: Double = 0
@@ -118,13 +111,6 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
           loyaltyPoints += 1
         }
 
-        report += "- " + movie.title
-        if (qualityText != null) {
-          report += " (" + qualityText + ")"
-        }
-        report += " "
-        report += price * qualitySurcharge + " CZK"
-        report += "\n"
         total += price * qualitySurcharge
       }
     }
@@ -148,21 +134,5 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
       }
     }
 
-    report += "\n"
-    report += ("Streamings: " + streamings.size)
-    report += "\n"
-    report += ("Movies: " + uniqueMovies)
-    report += "\n"
-
-    if (Globals.UseEmphasis) {
-      report += ("Total: *" + total + "* CZK")
-    } else {
-      report += ("Total: " + total + " CZK")
-    }
-
-    report += "\n"
-    report += ("Points: " + loyaltyPoints)
-    report += "\n"
-    report
   }
 }
