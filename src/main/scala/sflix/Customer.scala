@@ -48,6 +48,9 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
   def statement(): String = {
 
     var statement = new Statement
+    statement.name = this.name
+    statement.id = this.id
+    statement.streamings = this.streamings
 
     for (streaming <- streamings) {
       val movie = movieService.movieById(streaming.movieId)

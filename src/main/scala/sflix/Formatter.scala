@@ -6,9 +6,9 @@ object Formatter {
 
   def getXml(statement: Statement): String = {
     if (Globals.UseEmphasis) {
-      report = "Streaming report for *" + name + "* (" + id + ")\n"
+      report = "Streaming report for *%s* (%d)\n".format(statement.name, statement.id)
     } else {
-      report = "Streaming report for " + name + " (" + id + ")\n"
+      report = "Streaming report for %s (%d)\n".format(statement.name, statement.id)
     }
 
     report += "- " + movie.title
@@ -21,7 +21,7 @@ object Formatter {
 
 
     report += "\n"
-    report += ("Streamings: " + streamings.size)
+    report += "Streamings: %i".format(statement.streamings.size)
     report += "\n"
     report += ("Movies: " + uniqueMovies)
     report += "\n"

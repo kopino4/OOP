@@ -2,6 +2,11 @@ package sflix
 
 class Statement {
 
+  var streamings = Nil
+
+  var name: String = ""
+  var id: Int = 0
+
   var total: Double = 0.0
   var loyaltyPoints: Int = 0
 
