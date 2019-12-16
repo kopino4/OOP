@@ -46,10 +46,13 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
   // each streamed movie has contains the movie itself, streaming quality and price.
   // The statement class can be then an input into into a formatter which turns it into a String.
   def statement(): String = {
-    Formatter.getXml(calc_statement(), false)
+    val statement = calc_statement(false)
+    Formatter.getXml(statement, false)
   }
 
-  def calc_statement(): Statement = {
+  // Is the loyalty points bonus active?
+  // If it is active, we double all the points
+  def calc_statement(LoyaltyPointsBonus: Boolean): Statement = {
 
     var statement = new Statement
     statement.name = this.name
@@ -127,7 +130,7 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
     }
 
     // if the bonus is on, double the points
-    if (Globals.LoyaltyPointsBonus) {
+    if (LoyaltyPointsBonus) {
       statement.loyaltyPoints *= 2
     }
 
