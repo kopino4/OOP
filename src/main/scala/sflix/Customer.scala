@@ -128,6 +128,9 @@ def statement(LoyaltyPointsBonus: Boolean): Statement = {
         seenMovies.add(streaming.movieId)
       }
     }
+
+
+    statement.loyaltyPoints = calc_loyaltyPoints(streamings.size, LoyaltyPointsBonus)
     statement
   }
 
