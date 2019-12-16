@@ -1,6 +1,8 @@
 package sflix
 
 class Statement {
+  var uniqueMovies: Int = 0
+  var movie_title: String = ""
 
   var streamings = Nil
 

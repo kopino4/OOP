@@ -55,6 +55,8 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
     for (streaming <- streamings) {
       val movie = movieService.movieById(streaming.movieId)
 
+      statement.movie_title = movie.title
+
       if (movie != null) {
         // if movie is not in the movie database (it can happen, streaming industry is a dynamic business)
         // we simply ignore it, consider it a free gift from sflix.
@@ -125,11 +127,10 @@ class Customer(val id: Int, val name: String, val streamings: Seq[Streaming]) {
       statement.loyaltyPoints *= 2
     }
 
-    var uniqueMovies = 0
     var seenMovies = scala.collection.mutable.Set[Int]()
     for (streaming <- streamings) {
       if (!seenMovies.contains(streaming.movieId)) {
-        uniqueMovies += 1
+        statement.uniqueMovies += 1
         seenMovies.add(streaming.movieId)
       }
     }
